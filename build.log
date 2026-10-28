@@ -1,0 +1,32 @@
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.8.2-bin.zip
+..............10%..............20%...............30%..............40%...............50%..............60%...............70%..............80%...............90%..............100%
+
+Welcome to Gradle 9.8.2!
+
+Here are the highlights of this release:
+ - Java 27 support
+ - Maven mirror settings reuse
+ - Linked problem locations in build output
+
+For more details see https://docs.gradle.org/9.8.2/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'chaosevo'.
+> Could not resolve all artifacts for configuration 'classpath'.
+   > Could not download mercury-0.4.3.jar (net.fabricmc:mercury:0.4.3)
+      > Could not get resource 'https://maven.fabricmc.net/net/fabricmc/mercury/0.4.3/mercury-0.4.3.jar'.
+         > Read timed out
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 19m 50s
