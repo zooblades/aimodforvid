@@ -1,0 +1,14 @@
+{
+  "block.chaosevo.void_ore": "Руда Бездны",
+  "block.chaosevo.blood_ore": "Кровавая руда",
+  "block.chaosevo.storm_ore": "Грозовая руда",
+  "item.chaosevo.void_shard": "Осколок Бездны",
+  "item.chaosevo.blood_crystal": "Кровавый кристалл",
+  "item.chaosevo.storm_core": "Грозовое ядро",
+  "item.chaosevo.chaos_sigil": "Сигил Хаоса",
+  "item.chaosevo.chaos_heart": "Сердце Хаоса",
+  "item.chaosevo.boss_key_1": "Ключ Колосса",
+  "item.chaosevo.boss_key_2": "Ключ Палача",
+  "item.chaosevo.boss_key_3": "Ключ Крипера",
+  "item.chaosevo.boss_key_4": "Ключ Стража"
+}

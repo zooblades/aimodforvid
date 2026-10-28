@@ -1,0 +1,14 @@
+{
+  "block.chaosevo.void_ore": "Void Ore",
+  "block.chaosevo.blood_ore": "Blood Ore",
+  "block.chaosevo.storm_ore": "Storm Ore",
+  "item.chaosevo.void_shard": "Void Shard",
+  "item.chaosevo.blood_crystal": "Blood Crystal",
+  "item.chaosevo.storm_core": "Storm Core",
+  "item.chaosevo.chaos_sigil": "Chaos Sigil",
+  "item.chaosevo.chaos_heart": "Heart of Chaos",
+  "item.chaosevo.boss_key_1": "Colossus Key",
+  "item.chaosevo.boss_key_2": "Executioner Key",
+  "item.chaosevo.boss_key_3": "Creeper Key",
+  "item.chaosevo.boss_key_4": "Guardian Key"
+}

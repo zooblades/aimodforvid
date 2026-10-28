@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOO",
+    "VBS",
+    "OOO"
+  ],
+  "key": {
+    "O": "minecraft:obsidian",
+    "V": "chaosevo:void_shard",
+    "B": "chaosevo:blood_crystal",
+    "S": "chaosevo:storm_core"
+  },
+  "result": {
+    "id": "chaosevo:chaos_sigil",
+    "count": 1
+  }
+}
