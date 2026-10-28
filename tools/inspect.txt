@@ -1,3 +1,1 @@
-net.minecraft.world.entity.EntityTypes|(ZOMBIE|SKELETON|SPIDER|WITHER|WARDEN|ELDER|LIGHTNING|CREEPER|ENDERMAN|RAVAGER)
-net.minecraft.world.entity.player.Inventory|(add|place|drop)
-net.minecraft.world.entity.Entity|(spawnAtLocation|igniteForSeconds)
+net.minecraft.world.entity.LivingEntity|(heal|setDropChance)

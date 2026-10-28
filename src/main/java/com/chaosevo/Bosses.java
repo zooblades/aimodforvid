@@ -366,6 +366,6 @@ public final class Bosses {
 	}
 
 	private static void give(ServerPlayer p, ItemStack st) {
-		if (!p.getInventory().add(st)) p.drop(st, false);
+		if (!p.getInventory().add(st)) p.spawnAtLocation((ServerLevel) p.level(), st);
 	}
 }
