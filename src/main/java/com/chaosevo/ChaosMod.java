@@ -113,7 +113,7 @@ public class ChaosMod implements ModInitializer {
 		String text = "§cГнев: ур." + s.level() + " §7| §aЖизни: " + s.lives
 			+ " §7| §4Смертей: " + s.deaths + " §7| §6Боссов: " + s.bossesDefeated + "/" + Bosses.DEFS.length;
 		for (ServerPlayer p : server.getPlayerList().getPlayers()) {
-			p.displayClientMessage(Component.literal(text), true);
+			p.sendOverlayMessage(Component.literal(text));
 		}
 	}
 }

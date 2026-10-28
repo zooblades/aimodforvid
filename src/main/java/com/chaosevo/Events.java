@@ -13,6 +13,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -103,7 +104,7 @@ public final class Events {
 				for (int i = 0; i < 30; i++) {
 					later(i * 40, () -> {
 						for (ServerPlayer p : players(server)) {
-							spawnAround(p, R.nextBoolean() ? EntityType.ZOMBIE : EntityType.SKELETON, 3, 10, 20, true);
+							spawnAround(p, R.nextBoolean() ? EntityTypes.ZOMBIE : EntityTypes.SKELETON, 3, 10, 20, true);
 						}
 					});
 				}
@@ -121,9 +122,9 @@ public final class Events {
 			}
 			case HORDE -> {
 				for (ServerPlayer p : ps) {
-					spawnAround(p, EntityType.ZOMBIE, 4 + lvl, 10, 18, false);
-					spawnAround(p, EntityType.SKELETON, 2 + lvl / 2, 10, 18, false);
-					spawnAround(p, EntityType.SPIDER, 2 + lvl / 2, 10, 18, false);
+					spawnAround(p, EntityTypes.ZOMBIE, 4 + lvl, 10, 18, false);
+					spawnAround(p, EntityTypes.SKELETON, 2 + lvl / 2, 10, 18, false);
+					spawnAround(p, EntityTypes.SPIDER, 2 + lvl / 2, 10, 18, false);
 				}
 			}
 			case STORM -> {
@@ -133,7 +134,7 @@ public final class Events {
 						if (now.isEmpty()) return;
 						ServerPlayer p = now.get(R.nextInt(now.size()));
 						BlockPos pos = p.blockPosition().offset(R.nextInt(17) - 8, 0, R.nextInt(17) - 8);
-						EntityType.LIGHTNING_BOLT.spawn((ServerLevel) p.level(), pos, EntitySpawnReason.EVENT);
+						EntityTypes.LIGHTNING_BOLT.spawn((ServerLevel) p.level(), pos, EntitySpawnReason.EVENT);
 					});
 				}
 			}

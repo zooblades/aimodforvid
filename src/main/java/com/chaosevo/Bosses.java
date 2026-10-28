@@ -18,6 +18,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -33,11 +34,11 @@ public final class Bosses {
 	public record Def(String name, EntityType<? extends Mob> type, double scale, double hp, double dmg) { }
 
 	public static final Def[] DEFS = {
-		new Def("Гнилой Колосс", EntityType.ZOMBIE, 3.5, 600, 12),
-		new Def("Костяной Палач", EntityType.WITHER_SKELETON, 3.0, 800, 14),
-		new Def("Грозовой Крипер", EntityType.CREEPER, 4.0, 1000, 0),
-		new Def("Пустотный Страж", EntityType.ENDERMAN, 3.0, 1200, 16),
-		new Def("Владыка Хаоса", EntityType.RAVAGER, 3.0, 2500, 22),
+		new Def("Гнилой Колосс", EntityTypes.ZOMBIE, 3.5, 600, 12),
+		new Def("Костяной Палач", EntityTypes.WITHER_SKELETON, 3.0, 800, 14),
+		new Def("Грозовой Крипер", EntityTypes.CREEPER, 4.0, 1000, 0),
+		new Def("Пустотный Страж", EntityTypes.ENDERMAN, 3.0, 1200, 16),
+		new Def("Владыка Хаоса", EntityTypes.RAVAGER, 3.0, 2500, 22),
 	};
 
 	private static final String[] CAT = {"ближний бой", "стрелы/снаряды", "огонь", "взрывы", "магия/прочее"};
@@ -211,20 +212,20 @@ public final class Bosses {
 		ServerPlayer rnd = ps.get(R.nextInt(ps.size()));
 		switch (idx) {
 			case 0 -> {
-				if (sec % 12 == 0) horde(lvl, boss, EntityType.ZOMBIE, 2 + ps.size());
+				if (sec % 12 == 0) horde(lvl, boss, EntityTypes.ZOMBIE, 2 + ps.size());
 				if (ph >= 2 && sec % 8 == 0) slam(lvl, boss, ps, 8, 8f);
 				if (ph == 3 && sec % 6 == 0) slam(lvl, boss, ps, 10, 12f);
 			}
 			case 1 -> {
 				if (sec % 6 == 0) fire(ps);
 				if (sec % 10 == 0) slam(lvl, boss, ps, 8, 8f);
-				if (ph >= 2 && sec % 14 == 0) horde(lvl, boss, EntityType.SKELETON, 2 + ps.size());
+				if (ph >= 2 && sec % 14 == 0) horde(lvl, boss, EntityTypes.SKELETON, 2 + ps.size());
 				if (ph == 3 && sec % 8 == 0) witherCurse(ps);
 			}
 			case 2 -> {
 				if (sec % 5 == 0) lightning(lvl, ps, ph);
 				if (sec % 10 == 0) blast(lvl, boss, rnd, 3f);
-				if (ph == 3 && sec % 7 == 0) horde(lvl, boss, EntityType.CREEPER, 2);
+				if (ph == 3 && sec % 7 == 0) horde(lvl, boss, EntityTypes.CREEPER, 2);
 			}
 			case 3 -> {
 				if (sec % 8 == 0) voidPull(boss, rnd);
@@ -236,7 +237,7 @@ public final class Bosses {
 				if (sec % 8 == 0) slam(lvl, boss, ps, 9, 14f);
 				if (sec % 5 == 0) {
 					switch (R.nextInt(6)) {
-						case 0 -> horde(lvl, boss, EntityType.ZOMBIE, 2 + ps.size());
+						case 0 -> horde(lvl, boss, EntityTypes.ZOMBIE, 2 + ps.size());
 						case 1 -> fire(ps);
 						case 2 -> lightning(lvl, ps, ph + 1);
 						case 3 -> voidPull(boss, rnd);
@@ -282,7 +283,7 @@ public final class Bosses {
 		for (int i = 0; i < count; i++) {
 			ServerPlayer p = ps.get(R.nextInt(ps.size()));
 			BlockPos pos = p.blockPosition().offset(R.nextInt(5) - 2, 0, R.nextInt(5) - 2);
-			EntityType.LIGHTNING_BOLT.spawn(lvl, pos, EntitySpawnReason.EVENT);
+			EntityTypes.LIGHTNING_BOLT.spawn(lvl, pos, EntitySpawnReason.EVENT);
 		}
 	}
 
@@ -317,7 +318,7 @@ public final class Bosses {
 	}
 
 	public static void onDamage(LivingEntity victim, DamageSource src, float dmg) {
-		if (!victim.getTags().contains("chaos_boss") || !victim.isAlive()) return;
+		if (!victim.entityTags().contains("chaos_boss") || !victim.isAlive()) return;
 		int cat = category(src);
 		adapt[cat]++;
 		for (int c = 0; c < adapt.length; c++) {
@@ -338,7 +339,7 @@ public final class Bosses {
 	// ---------- смерть ----------
 
 	public static void onDeath(LivingEntity entity, DamageSource src) {
-		if (!(entity instanceof Mob boss) || !boss.getTags().contains("chaos_boss")) return;
+		if (!(entity instanceof Mob boss) || !boss.entityTags().contains("chaos_boss")) return;
 		if (!(boss.level() instanceof ServerLevel lvl)) return;
 		State s = State.get();
 		if (s == null) return;

@@ -19,6 +19,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -50,7 +51,7 @@ public final class Mutations {
 	}
 
 	private static boolean has(Entity e, Trait t) {
-		return e.getTags().contains(t.tag());
+		return e.entityTags().contains(t.tag());
 	}
 
 	private static void mod(LivingEntity e, Holder<Attribute> attr, String id, double amount,
@@ -70,13 +71,13 @@ public final class Mutations {
 		if (!(entity instanceof Monster m)) return;
 		State s = State.get();
 		if (s == null) return;
-		if (m.getTags().contains("chaos_done")) return;
+		if (m.entityTags().contains("chaos_done")) return;
 		m.addTag("chaos_done");
 
 		int lvl = s.level();
 		if (lvl <= 0) return;
 		EntityType<?> type = m.getType();
-		if (type == EntityType.WITHER || type == EntityType.WARDEN || type == EntityType.ELDER_GUARDIAN) return;
+		if (type == EntityTypes.WITHER || type == EntityTypes.WARDEN || type == EntityTypes.ELDER_GUARDIAN) return;
 
 		ThreadLocalRandom r = ThreadLocalRandom.current();
 		double chance = 0.10 + 0.07 * lvl;
@@ -142,7 +143,7 @@ public final class Mutations {
 	public static void onDamage(LivingEntity victim, DamageSource source, float dmg) {
 		if (!(victim instanceof ServerPlayer p)) return;
 		if (!(source.getEntity() instanceof LivingEntity attacker)) return;
-		if (attacker.getTags().isEmpty()) return;
+		if (attacker.entityTags().isEmpty()) return;
 		ServerLevel level = (ServerLevel) p.level();
 		ThreadLocalRandom r = ThreadLocalRandom.current();
 
@@ -160,7 +161,7 @@ public final class Mutations {
 			attacker.heal(dmg * 0.5f);
 		}
 		if (has(attacker, Trait.STORM) && r.nextDouble() < 0.25) {
-			EntityType.LIGHTNING_BOLT.spawn(level, p.blockPosition(), EntitySpawnReason.EVENT);
+			EntityTypes.LIGHTNING_BOLT.spawn(level, p.blockPosition(), EntitySpawnReason.EVENT);
 		}
 		if (has(attacker, Trait.BLINK) && r.nextDouble() < 0.35) {
 			Vec3 look = p.getLookAngle();
@@ -172,7 +173,7 @@ public final class Mutations {
 				mob.setItemInHand(InteractionHand.MAIN_HAND, held.copy());
 				mob.setDropChance(EquipmentSlot.MAINHAND, 1.0f);
 				p.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-				p.displayClientMessage(Component.literal("§cВор украл твой предмет! Убей его, чтобы вернуть."), true);
+				p.sendOverlayMessage(Component.literal("§cВор украл твой предмет! Убей его, чтобы вернуть."));
 				mob.addEffect(new MobEffectInstance(MobEffects.SPEED, 200, 2));
 			}
 		}
@@ -180,7 +181,7 @@ public final class Mutations {
 
 	/** Эффекты при смерти мутанта. */
 	public static void onDeath(LivingEntity entity, DamageSource source) {
-		if (entity.getTags().isEmpty() || !(entity.level() instanceof ServerLevel level)) return;
+		if (entity.entityTags().isEmpty() || !(entity.level() instanceof ServerLevel level)) return;
 		if (has(entity, Trait.EXPLOSIVE)) {
 			level.explode(entity, entity.getX(), entity.getY() + 0.5, entity.getZ(), 3.0f,
 				Level.ExplosionInteraction.MOB);

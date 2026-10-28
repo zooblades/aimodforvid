@@ -19,12 +19,12 @@ public class SigilItem extends Item {
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		if (level instanceof ServerLevel sl && player instanceof ServerPlayer sp) {
 			if (sl.dimension() != Level.OVERWORLD) {
-				sp.displayClientMessage(Component.literal("§cСигил работает только в Верхнем мире"), true);
+				sp.sendOverlayMessage(Component.literal("§cСигил работает только в Верхнем мире"));
 				return InteractionResult.FAIL;
 			}
 			String err = Bosses.trySummon(sl, sp);
 			if (err != null) {
-				sp.displayClientMessage(Component.literal("§c" + err), true);
+				sp.sendOverlayMessage(Component.literal("§c" + err));
 				return InteractionResult.FAIL;
 			}
 			player.getItemInHand(hand).shrink(1);
