@@ -1,5 +1,7 @@
 name: build
 on: [push, workflow_dispatch]
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,7 +12,24 @@ jobs:
           distribution: temurin
           java-version: 25
       - run: chmod +x gradlew
-      - run: ./gradlew build --no-daemon
+      - name: Build
+        run: |
+          set +e
+          ./gradlew build --no-daemon > build.log 2>&1
+          echo $? > build.status
+          exit 0
+      - name: Publish log to ci-log branch
+        run: |
+          mkdir /tmp/ci && cp build.log build.status /tmp/ci/
+          cd /tmp/ci
+          git init -q -b ci-log
+          git config user.name "ci"
+          git config user.email "ci@example.com"
+          git add -A
+          git commit -q -m "build log for ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-log
+      - name: Fail if build failed
+        run: test "$(cat build.status)" = "0"
       - uses: actions/upload-artifact@v4
         with:
           name: chaosevo-jar
