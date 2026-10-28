@@ -18,9 +18,11 @@ jobs:
           ./gradlew build --no-daemon > build.log 2>&1
           echo $? > build.status
           exit 0
+      - name: Inspect API
+        run: bash tools/inspect.sh > inspect.txt 2>&1 || true
       - name: Publish log to ci-log branch
         run: |
-          mkdir /tmp/ci && cp build.log build.status /tmp/ci/
+          mkdir /tmp/ci && cp build.log build.status inspect.txt /tmp/ci/
           cd /tmp/ci
           git init -q -b ci-log
           git config user.name "ci"

@@ -1,0 +1,6 @@
+find|world/entity/EntityType
+find|world/entity/EntityTypes
+net.minecraft.world.entity.EntityType|static final
+net.minecraft.world.entity.Entity|[Tt]ag
+net.minecraft.server.level.ServerPlayer|(message|drop|sendSystem|actionbar|overlay)
+net.minecraft.world.entity.player.Player|(message|drop|sendSystem|actionbar|overlay)
